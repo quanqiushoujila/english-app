@@ -1,0 +1,9 @@
+[
+  {"word": "apple", "type": "fruit"},
+  {"word": "banana ", "type": "fruit"},
+  {"word": "blackberry", "type": "fruit"},
+  {"word": "orange", "type": "fruit"},
+  {"word": "cherry", "type": "fruit"},
+  {"word": "cumquat", "type": "fruit"},
+  {"word": "coconut", "type": "fruit"}
+]
