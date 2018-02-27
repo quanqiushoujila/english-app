@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { getWords } from 'api/api'
+import { getWords, getImage, getWord } from 'api/api'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
@@ -66,6 +66,16 @@ export default {
     getAudioSrc () {
       this.src = `http://fanyi.baidu.com/gettts?lan=en&text=${this.word}&spd=3&source=web`
     },
+    selectWord () {
+      getWord(this.word).then((res) => {
+        console.log(res)
+      })
+    },
+    selectImage () {
+      getImage(`${this.word} ${this.currentWordsList[this.currentIndex].type}`).then((res) => {
+        console.log(res)
+      })
+    },
     play () {
       this.$refs.audio.play()
     },
@@ -89,6 +99,10 @@ export default {
   watch: {
     src () {
       this.getAudioSrc()
+    },
+    word (newVal) {
+      console.log('word')
+      this.selectWord()
     }
   }
 }

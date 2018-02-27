@@ -12,6 +12,7 @@ const portfinder = require('portfinder')
 const words = require('../static/data.json')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+const axios = require('axios')
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -48,8 +49,38 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         res.json({
           data: words
         })
+      }),
+      app.get('/api/image', (req, res) => {
+        const url = 'http://image.baidu.com/search/acjson'
+        axios.get(url, {
+          params: res.query,
+          headers: {
+            host: 'image.baidu.com',
+            Referer: 'http://image.baidu.com'
+          }
+        }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      }),
+      app.get('/api/word', (req, res) => {
+        const url = 'http://fanyi.baidu.com/sug'
+        axios.get(url, {
+          params: res.query,
+          headers: {
+            host: 'fanyi.baidu.com',
+            Referer: 'http://fanyi.baidu.com',
+            Origin: 'http://fanyi.baidu.com'
+          }
+        }).then((response) => {
+          console.log('意思', response)
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
       })
-    }
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
